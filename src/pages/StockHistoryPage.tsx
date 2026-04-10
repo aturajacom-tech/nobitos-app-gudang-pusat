@@ -14,8 +14,8 @@ export const StockHistoryPage = () => {
     try {
       setIsLoading(true);
       const response = await stockService.getStockHistory(page, 50);
-      setHistory(response.items);
-      setTotalPages(response.total_pages);
+      setHistory(response.data.items);
+      setTotalPages(response.data.total_pages);
     } catch (error) {
       console.error("Failed to fetch stock history", error);
     } finally {
