@@ -17,6 +17,8 @@ import { PurchaseOrdersPage } from './pages/PurchaseOrdersPage';
 import { PurchaseOrderDetailPage } from './pages/PurchaseOrderDetailPage';
 import { StockCurrentPage } from './pages/StockCurrentPage';
 import { StockHistoryPage } from './pages/StockHistoryPage';
+import { DeliveryOrdersPage } from './pages/DeliveryOrdersPage';
+import { HandoversPage } from './pages/HandoversPage';
 
 export default function App() {
   return (
@@ -37,10 +39,8 @@ export default function App() {
               <Route path="/purchase-orders/:id" element={<PurchaseOrderDetailPage />} />
               <Route path="/stock/current" element={<StockCurrentPage />} />
               <Route path="/stock/history" element={<StockHistoryPage />} />
-              
-              {/* Bonus pages placeholders */}
-              <Route path="/delivery-orders" element={<div className="p-8 text-center text-gray-500">Delivery Orders (Coming Soon)</div>} />
-              <Route path="/handovers" element={<div className="p-8 text-center text-gray-500">Handovers (Coming Soon)</div>} />
+              <Route path="/delivery-orders" element={<DeliveryOrdersPage />} />
+              <Route path="/handovers" element={<HandoversPage />} />
               
               <Route path="/" element={<Navigate to="/dashboard" replace />} />
             </Route>
