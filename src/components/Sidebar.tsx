@@ -14,12 +14,12 @@ export const Sidebar = () => {
   const { user } = useAuth();
   
   const navItems = [
-    { name: 'Dashboard', path: '/dashboard', icon: LayoutDashboard, roles: ['office_staff', 'warehouse_staff'] },
-    { name: 'Purchase Orders', path: '/purchase-orders', icon: ShoppingCart, roles: ['office_staff', 'warehouse_staff'] },
-    { name: 'Current Stock', path: '/stock/current', icon: Package, roles: ['office_staff', 'warehouse_staff'] },
-    { name: 'Stock History', path: '/stock/history', icon: History, roles: ['office_staff', 'warehouse_staff'] },
-    { name: 'Delivery Orders', path: '/delivery-orders', icon: Truck, roles: ['office_staff', 'warehouse_staff'] },
-    { name: 'Handovers', path: '/handovers', icon: KeyRound, roles: ['warehouse_staff'] },
+    { name: 'Dashboard', path: '/dashboard', icon: LayoutDashboard, roles: ['office_pusat', 'gudang_pusat', 'supplier', 'kitchen_head', 'kitchen_staff', 'outlet_manager', 'hq_management'] },
+    { name: 'Purchase Orders', path: '/purchase-orders', icon: ShoppingCart, roles: ['office_pusat', 'gudang_pusat', 'supplier', 'hq_management'] },
+    { name: 'Current Stock', path: '/stock/current', icon: Package, roles: ['office_pusat', 'gudang_pusat', 'kitchen_head', 'kitchen_staff', 'hq_management'] },
+    { name: 'Stock History', path: '/stock/history', icon: History, roles: ['office_pusat', 'gudang_pusat', 'kitchen_head', 'hq_management'] },
+    { name: 'Delivery Orders', path: '/delivery-orders', icon: Truck, roles: ['office_pusat', 'gudang_pusat', 'supplier', 'outlet_manager', 'hq_management'] },
+    { name: 'Handovers', path: '/handovers', icon: KeyRound, roles: ['gudang_pusat', 'kitchen_staff', 'outlet_manager', 'hq_management'] },
   ];
 
   const filteredItems = navItems.filter(item => user && item.roles.includes(user.role));
