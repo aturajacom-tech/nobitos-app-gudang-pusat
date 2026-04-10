@@ -10,8 +10,7 @@ const registerSchema = z.object({
   email: z.string().email('Invalid email address'),
   password: z.string().min(8, 'Password must be at least 8 characters'),
   full_name: z.string().min(2, 'Full name must be at least 2 characters'),
-  organization: z.string().min(1, 'Organization is required'),
-  role: z.enum(['office_staff', 'warehouse_staff']),
+  role: z.enum(['office_pusat', 'gudang_pusat']),
 });
 
 type RegisterForm = z.infer<typeof registerSchema>;
@@ -24,7 +23,7 @@ export const RegisterPage = () => {
   const { register, handleSubmit, formState: { errors } } = useForm<RegisterForm>({
     resolver: zodResolver(registerSchema),
     defaultValues: {
-      role: 'office_staff'
+      role: 'gudang_pusat'
     }
   });
 
@@ -89,26 +88,14 @@ export const RegisterPage = () => {
         </div>
 
         <div>
-          <label className="block text-sm font-medium text-gray-700">Organization</label>
-          <div className="mt-1">
-            <input
-              {...register('organization')}
-              type="text"
-              className="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
-            />
-            {errors.organization && <p className="mt-1 text-sm text-red-600">{errors.organization.message}</p>}
-          </div>
-        </div>
-
-        <div>
           <label className="block text-sm font-medium text-gray-700">Role</label>
           <div className="mt-1">
             <select
               {...register('role')}
-              className="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm rounded-md"
+              className="mt-1 block w-full pl-3 pr-10 py-2 text-base border border-gray-300 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm rounded-md"
             >
-              <option value="office_staff">Office Staff</option>
-              <option value="warehouse_staff">Warehouse Staff</option>
+              <option value="gudang_pusat">Gudang Pusat (Warehouse Staff)</option>
+              <option value="office_pusat">Office Pusat (Office Staff)</option>
             </select>
             {errors.role && <p className="mt-1 text-sm text-red-600">{errors.role.message}</p>}
           </div>

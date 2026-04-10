@@ -1,64 +1,82 @@
-export type Role = 'office_staff' | 'warehouse_staff';
+// Role values must match backend DB enum exactly
+export type Role = 'office_pusat' | 'gudang_pusat' | 'supplier' | 'kitchen_head' | 'kitchen_staff' | 'outlet_manager' | 'hq_management';
 
 export interface User {
   id: string;
   email: string;
   full_name: string;
-  organization: string;
   role: Role;
+  organization_id?: string;
 }
 
+// Matches backend response: { status: 'success', data: { user_id, email, token, ... } }
 export interface AuthResponse {
-  user: User;
-  token: string;
+  status: string;
+  data: {
+    user_id: string;
+    email: string;
+    full_name: string;
+    role: Role;
+    organization_id?: string;
+    token?: string;
+    expires_in?: number;
+    token_type?: string;
+    created_at?: string;
+  };
 }
 
-export type POStatus = 'draft' | 'sent' | 'confirmed' | 'completed';
+export type POStatus = 'draft' | 'sent' | 'confirmed' | 'partially_received' | 'completed' | 'cancelled';
 
 export interface POItem {
   id: string;
-  item_name: string;
-  sku: string;
+  item_id: string;
   quantity: number;
-  unit_price: number;
+  unit_price?: number;
+  subtotal?: number;
+  received_qty?: number;
 }
 
 export interface PurchaseOrder {
   id: string;
   po_number: string;
-  supplier_name: string;
+  supplier_id: string;
   status: POStatus;
+  total_amount?: number;
+  created_by: string;
+  confirmed_at?: string;
   created_at: string;
-  expected_delivery_date?: string;
-  items: POItem[];
-  total_amount: number;
+  updated_at: string;
+  items?: POItem[];
 }
 
 export interface StockItem {
   id: string;
-  item_name: string;
-  sku: string;
-  current_quantity: number;
-  minimum_quantity: number;
-  location: string;
+  item_id: string;
+  quantity: number;
+  updated_at: string;
+  items?: {
+    sku: string;
+    name: string;
+    unit: string;
+    item_type: string;
+  };
 }
 
 export interface StockHistory {
   id: string;
-  item_name: string;
-  sku: string;
-  change_amount: number;
-  previous_quantity: number;
-  new_quantity: number;
-  reason: string;
+  item_id: string;
+  transaction_type: string;
+  quantity: number;
+  notes?: string;
   created_at: string;
-  created_by: string;
+  items?: { name: string; sku: string; unit: string };
+  users?: { full_name: string };
 }
 
 export interface PaginatedResponse<T> {
-  data: T[];
+  items: T[];
   total: number;
   page: number;
-  limit: number;
+  per_page: number;
   total_pages: number;
 }
