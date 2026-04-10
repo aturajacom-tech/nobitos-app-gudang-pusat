@@ -14,7 +14,7 @@ export const StockHistoryPage = () => {
     try {
       setIsLoading(true);
       const response = await stockService.getStockHistory(page, 50);
-      setHistory(response.data);
+      setHistory(response.items);
       setTotalPages(response.total_pages);
     } catch (error) {
       console.error("Failed to fetch stock history", error);
@@ -58,42 +58,42 @@ export const StockHistoryPage = () => {
                           Item
                         </th>
                         <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                          Reason
+                          Type
                         </th>
                         <th scope="col" className="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">
-                          Change
+                          Quantity
                         </th>
                         <th scope="col" className="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">
-                          New Qty
+                          Notes
                         </th>
                         <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                          User
+                          Recorded By
                         </th>
                       </tr>
                     </thead>
                     <tbody className="bg-white divide-y divide-gray-200">
-                      {history.map((record) => (
+                      {history.map((record: any) => (
                         <tr key={record.id}>
                           <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
                             {format(new Date(record.created_at), 'MMM d, yyyy HH:mm')}
                           </td>
                           <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
-                            {record.item_name}
-                            <div className="text-xs text-gray-500">{record.sku}</div>
+                            {record.items?.name || 'Unknown Item'}
+                            <div className="text-xs text-gray-500">{record.items?.sku || '-'}</div>
                           </td>
                           <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                            {record.reason}
+                            {record.transaction_type}
                           </td>
                           <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-right">
-                            <span className={record.change_amount > 0 ? 'text-green-600' : 'text-red-600'}>
-                              {record.change_amount > 0 ? '+' : ''}{record.change_amount}
+                            <span className={record.quantity > 0 ? 'text-green-600' : 'text-red-600'}>
+                              {record.quantity > 0 ? '+' : ''}{record.quantity}
                             </span>
                           </td>
                           <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900 text-right">
-                            {record.new_quantity}
+                            {record.notes || '-'}
                           </td>
                           <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                            {record.created_by}
+                            {record.users?.full_name || 'Unknown'}
                           </td>
                         </tr>
                       ))}
